@@ -3,6 +3,7 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.jokesandroidlibrary.JokeActivity;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -14,6 +15,7 @@ import com.udacity.gradle.builditbigger.backend.myApi.MyApi;
 import java.io.IOException;
 
 public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
+    private static final String TAG = EndpointsAsyncTask.class.getName();
     public static MyApi myApiService = null;
     private Context context;
 
@@ -42,13 +44,14 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
         try {
             return myApiService.getJokeService().execute().getData();
         } catch (IOException e) {
-            return e.getMessage();
+            Log.d(TAG, "doInBackground: IOException Empty String");
+            return "";
         }
     }
 
     @Override
     protected void onPostExecute(String result) {
-        final Intent intent = new Intent(context, JokeActivity.class);
+        Intent intent = new Intent(context, JokeActivity.class);
         intent.putExtra("asyncTaskData", result);
         context.startActivity(intent);
     }

@@ -21,9 +21,11 @@ public class JokeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_joke, container, false);
 
         //String joke = getActivity().getIntent().getStringExtra("joke");
-        String joke = getActivity().getIntent().getStringExtra("asyncTaskData");
-        TextView textView = view.findViewById(R.id.textView_joke);
-        textView.setText(joke);
+        if(getActivity().getIntent().hasExtra("asyncTaskData")) {
+            String joke = getActivity().getIntent().getStringExtra("asyncTaskData");
+            TextView textView = view.findViewById(R.id.textView_joke);
+            textView.setText(joke);
+        }
 
         return view;
     }
